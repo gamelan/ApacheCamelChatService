@@ -11,11 +11,13 @@
 
   <bean id="camelWebsocketChatServiceRoute" class="com.gamelan.routing.CamelWebsocketChatServiceRoute">
     <constructor-arg index="0" value="${websocket.uri}"/>
+    <constructor-arg index="1" value="${websocket.in.config}"/>
+    <constructor-arg index="2" value="${websocket.out.config}"/>
   </bean>
 
   <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
     <property name="location">
-        <value>application.properties</value>
+        <value>classpath:application.properties</value>
     </property>
     
   </bean> 

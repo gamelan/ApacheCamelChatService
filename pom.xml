@@ -14,6 +14,8 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <ahc-version>1.9.40</ahc-version>
+    <spring-version>4.3.5.RELEASE</spring-version>
   </properties>
 
   <dependencyManagement>
@@ -53,7 +55,7 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-web</artifactId>
-      <version>4.3.5.RELEASE</version>
+      <version>${spring-version}</version>
     </dependency>
 
     <!-- logging -->
@@ -77,6 +79,12 @@
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-test-spring</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.ning</groupId>
+      <artifactId>async-http-client</artifactId>
+      <version>${ahc-version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
