@@ -6,7 +6,9 @@
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
   <camelContext xmlns="http://camel.apache.org/schema/spring">
-
+    <routeBuilder ref="camelWebsocketChatServiceRoute"/>
   </camelContext>
+
+  <bean id="camelWebsocketChatServiceRoute" class="com.gamelan.routing.CamelWebsocketChatServiceRoute"/>
 
 </beans>
