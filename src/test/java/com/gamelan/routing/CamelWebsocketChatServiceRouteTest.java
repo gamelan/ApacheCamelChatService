@@ -11,7 +11,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
     public class CamelWebsocketChatServiceRouteTest extends CamelSpringTestSupport {
 
     private final String websocketRoute = "camelWebsocketChatServiceRoute";
-
+    private static final String WEBSOCKET_URI = "//localhost:9292/chat-service";
     @Override
     public String isMockEndpoints() {
         return "*";
@@ -21,6 +21,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
     public void testApplicationContext() throws Exception {
         CamelWebsocketChatServiceRoute route = (applicationContext.getBean(websocketRoute, CamelWebsocketChatServiceRoute.class));
         assertNotNull(route);
+
+        assertEquals(WEBSOCKET_URI, route.getWebsocketUri());
     }
 
     @Test

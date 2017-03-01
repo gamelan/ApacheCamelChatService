@@ -9,6 +9,16 @@
     <routeBuilder ref="camelWebsocketChatServiceRoute"/>
   </camelContext>
 
-  <bean id="camelWebsocketChatServiceRoute" class="com.gamelan.routing.CamelWebsocketChatServiceRoute"/>
+  <bean id="camelWebsocketChatServiceRoute" class="com.gamelan.routing.CamelWebsocketChatServiceRoute">
+    <constructor-arg index="0" value="${websocket.uri}"/>
+  </bean>
+
+  <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="location">
+        <value>application.properties</value>
+    </property>
+    
+  </bean> 
+
 
 </beans>

@@ -7,8 +7,22 @@ import org.apache.camel.builder.RouteBuilder;
  */
 public class CamelWebsocketChatServiceRoute extends RouteBuilder {
 
+    private String websocketUri;
+
+    public CamelWebsocketChatServiceRoute(String websocketUri) {
+        this.websocketUri = websocketUri;
+    }
+
     @Override
     public void configure() throws Exception {
         //do nothing
+    }
+
+    public String getWebsocketUri() {
+        return websocketUri;
+    }
+
+    public void setWebsocketUri(String websocketUri) {
+        this.websocketUri = websocketUri;
     }
 }
