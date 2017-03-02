@@ -4,41 +4,79 @@
     <meta charset="utf-8">
     <title>Simple Chat Client</title>
     <script>
-var connection
+
+var _socket;
 window.addEventListener("load", function () {
-	var nickname = prompt("Choose a nickname")
-	if (nickname) {
-		connection = new WebSocket("ws://localhost:9292/chat-service")
-		connection.onopen = function () {
-			console.log("Connection opened")
-			connection.send(nickname + ' has joined!')
-			document.getElementById("form").onsubmit = function (event) {
-				var msg = document.getElementById("msg")
-				if (msg.value)
-					connection.send(nickname + ':' + msg.value)
-				msg.value = ""
-				event.preventDefault()
-			}
-		}
-		connection.onclose = function () {
-			console.log("Connection closed")
-		}
-		connection.onerror = function () {
-			console.error("Connection error")
-		}
-		connection.onmessage = function (event) {
-			var div = document.createElement("div")
-			div.textContent = event.data
-			document.body.appendChild(div)
-		}
-	}
+
+    var _form = document.getElementById("form");
+    var _sendBtn = document.getElementById("sendMessageButton");
+    var _closeBtn = document.getElementById("closeConnectionButton");
+    var _openBtn = document.getElementById("openConnectionButton");
+
+    var _nickname = prompt("Choose a nickname");
+    if(_nickname) {
+        _socket = new WebSocket("ws://localhost:9292/chat-service");
+
+        _socket.onopen = function () {
+            _socket.send(_nickname + ' has joined!');
+            console.log("Connection opened");
+        };
+
+        _socket.onclose = function () {
+            console.log("Connection closed");
+        };
+
+        _socket.onerror = function () {
+            console.error("Connection error");
+        };
+
+        _socket.onmessage = function () {
+            var div = document.createElement("div");
+            div.textContent = event.data;
+            document.body.appendChild(div);
+        };
+
+        _openBtn.onclick = function() {
+            if(!_nickname) {
+                _nickname = prompt("Choose a nickname");
+                _socket.send(_nickname + ' has joined!');
+                console.log("Connection opened");
+            }
+        };
+
+        _closeBtn.onclick = function() {
+            if(_nickname) {
+                _socket.send(_nickname + ' has left!');
+                _nickname = null;
+                console.log("Connection closed");
+            }
+        };
+
+        _form.onsubmit = function() {
+            if(_nickname) {
+                var msg = document.getElementById("msg");
+                if (msg.value)
+                    _socket.send(_nickname + ':' + msg.value);
+                msg.value = "";
+                event.preventDefault();
+            }
+        };
+    }
 })
+
 </script>
 </head>
 
 <body>
+<input type="button" value="JoinChat" id="openConnectionButton">
+<input type="button" value="LeaveChat" id="closeConnectionButton">
+
 <form id="form">
-    Message: <input size="50" id="msg"> <input type="submit" value="Submit">
+    Message: <input size="50" id="msg">
+    <input type="submit" value="Submit" id="sendMessageButton">
 </form>
+
+
+
 </body>
 </html>
