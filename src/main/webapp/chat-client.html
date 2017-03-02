@@ -9,6 +9,7 @@ var _socket;
 window.addEventListener("load", function () {
 
     var _form = document.getElementById("form");
+    var _msg = document.getElementById("msg");
     var _sendBtn = document.getElementById("sendMessageButton");
     var _closeBtn = document.getElementById("closeConnectionButton");
     var _openBtn = document.getElementById("openConnectionButton");
@@ -52,12 +53,15 @@ window.addEventListener("load", function () {
             }
         };
 
-        _form.onsubmit = function() {
+        _sendBtn.onclick = function() {
+            if(!_nickname) {
+                _nickname = prompt("Choose a nickname");
+                _socket.send(_nickname + ' has joined!');
+            }
             if(_nickname) {
-                var msg = document.getElementById("msg");
-                if (msg.value)
-                    _socket.send(_nickname + ':' + msg.value);
-                msg.value = "";
+                if (_msg.value)
+                    _socket.send(_nickname + ':' + _msg.value);
+                _msg.value = "";
                 event.preventDefault();
             }
         };
@@ -68,12 +72,12 @@ window.addEventListener("load", function () {
 </head>
 
 <body>
-<input type="button" value="JoinChat" id="openConnectionButton">
-<input type="button" value="LeaveChat" id="closeConnectionButton">
 
 <form id="form">
     Message: <input size="50" id="msg">
     <input type="submit" value="Submit" id="sendMessageButton">
+    <input type="button" value="JoinChat" id="openConnectionButton">
+    <input type="button" value="LeaveChat" id="closeConnectionButton">
 </form>
 
 
